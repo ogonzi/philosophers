@@ -6,12 +6,11 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 12:33:23 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:58:55 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "philo.h"
 #include "utils.h"
 
 int	ft_set_args(int argc, char *argv[], t_args *args)
@@ -41,7 +40,8 @@ int	ft_set_args(int argc, char *argv[], t_args *args)
 
 int	main(int argc, char *argv[])
 {
-	t_args	args;
+	t_args			args;
+	t_pthread		pthread;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -53,5 +53,11 @@ int	main(int argc, char *argv[])
 		ft_print_error(ERR_FORM_ARGS);
 		return (1);
 	}
+	if (ft_allocate_pthread(&pthread, args.num_philo) == 1)
+	{
+		ft_print_error(ERR_MEM);
+		return (1);
+	}
+	ft_free_pthread(&pthread);
 	return (0);
 }

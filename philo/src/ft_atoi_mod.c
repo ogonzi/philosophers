@@ -6,14 +6,14 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:47:30 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 12:35:36 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/04 19:02:31 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_check_empty(const char *nptr, int *i)
 {
 	while ((nptr[*i] >= '\t' && nptr[*i] <= '\r') || nptr[*i] == ' '
-			|| nptr[*i] == '\0')
+		|| nptr[*i] == '\0')
 	{
 		if (nptr[*i] == '\0')
 			return (1);
