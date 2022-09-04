@@ -5,62 +5,52 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 17:15:50 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/03 18:02:57 by ogonzale         ###   ########.fr       */
+/*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
+/*   Updated: 2022/09/04 12:13:46 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <string.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h> 
+#include "philo.h"
 
-pthread_mutex_t	lock;
-
-void	*work_func(void *counter)
+int	ft_set_args(int argc, char *argv[], t_args *args)
 {
-	unsigned long	i;
-	int				*this_counter;
-	struct timeval	time;
-
-	this_counter = (int *)counter;
-	pthread_mutex_lock(&lock);
-	i = 0;
-	*this_counter += 1;
-	gettimeofday(&time, NULL);
-	printf("Job %d started at %ld\n", *this_counter, time.tv_usec);
-	while (++i < 0xFFFFFFFF);
-	gettimeofday(&time, NULL);
-	printf("Job %d finished at %ld\n", *this_counter, time.tv_usec);
-	pthread_mutex_unlock(&lock);
-	return (NULL);
+	args->num_philo = ft_atoi_mod(argv[1]);
+	if (args->num_philo == -1)
+		return (1);
+	args->time_to_die = ft_atoi_mod(argv[2]);
+	if (args->time_to_die == -1)
+		return (1);
+	args->time_to_eat = ft_atoi_mod(argv[3]);
+	if (args->time_to_eat == -1)
+		return (1);
+	args->time_to_sleep = ft_atoi_mod(argv[4]);
+	if (args->time_to_sleep == -1)
+		return (1);
+	if (argc == 6)
+	{
+		args->max_meals = ft_atoi_mod(argv[5]);
+		if (args->max_meals == -1)
+			return (1);
+	}
+	else
+		args->max_meals = -1;
+	return (0);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
-	pthread_t		tid[2];
-	int				counter;
-	int				i;
-	int				err;
+	t_args	args;
 
-	if (pthread_mutex_init(&lock, NULL) != 0)
+	if (argc < 5 || argc > 6)
 	{
-		printf("Mutex init failed\n");
+		printf("Error: The number of arguments is not correct.\n");
 		return (1);
 	}
-	counter = 0;
-	i = 0;
-	while (i < 2)
+	if (ft_set_args(argc, argv, &args) == 1)
 	{
-		err = pthread_create(&(tid[i]), NULL, work_func, &counter);
-		if (err != 0)
-			printf("Can't create thread: [%s]\n", strerror(err));
-		i++;
+		printf("Error: One or more arguments are not correctly formated.\n");
+		return (1);
 	}
-	pthread_join(tid[0], NULL);
-	pthread_join(tid[1], NULL);
-	pthread_mutex_destroy(&lock);
 	return (0);
 }

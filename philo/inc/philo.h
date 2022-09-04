@@ -6,19 +6,24 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/03 18:01:23 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:57:11 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <sys/time.h>
-
-struct s_timeval
+typedef struct s_args
 {
-	time_t		tv_sec;
-	suseconds_t	tv_usec;
-}
+	int	num_philo;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	max_meals;
+}		t_args;
+
+/* ft_atoi_mod.c */
+
+int	ft_atoi_mod(const char *nptr);
 
 #endif
