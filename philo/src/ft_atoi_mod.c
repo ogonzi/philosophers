@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:47:30 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 12:11:57 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/04 12:35:36 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_check_digit(const char *nptr, int *i)
 {
 	while (nptr[*i] != '\0')
 	{
-		if (nptr[*i] < '0' && nptr[*i] > '9')
+		if (nptr[*i] < '0' || nptr[*i] > '9')
 			return (1);
 		(*i)++;
 	}

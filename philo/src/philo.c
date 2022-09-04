@@ -6,12 +6,13 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 12:13:46 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/04 12:33:23 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
+#include "utils.h"
 
 int	ft_set_args(int argc, char *argv[], t_args *args)
 {
@@ -44,12 +45,12 @@ int	main(int argc, char *argv[])
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Error: The number of arguments is not correct.\n");
+		ft_print_error(ERR_NUM_ARGS);
 		return (1);
 	}
 	if (ft_set_args(argc, argv, &args) == 1)
 	{
-		printf("Error: One or more arguments are not correctly formated.\n");
+		ft_print_error(ERR_FORM_ARGS);
 		return (1);
 	}
 	return (0);
