@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 18:56:19 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/05 09:42:56 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define ERR_NUM_ARGS	"The number of arguments is not correct"
 # define ERR_FORM_ARGS	"One or more arguments are not correctly formated"
 # define ERR_MEM		"Memory allocation failed"
+# define ERR_MUTEX		"Mutex initialization failed"
+# define ERR_THREAD		"Thread creation failed"
 
 # define FORK_CODE	0
 # define EAT_CODE	1
