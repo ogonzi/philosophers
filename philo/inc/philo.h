@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/05 11:24:22 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:05:32 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,20 @@ typedef struct s_args
 	int	start_tv_msec;
 }		t_args;
 
+typedef struct s_philo
+{
+	int	eating;
+	int	sleeping;
+	int	thinking;
+	int	philo_num;
+}		t_philo;
+
 typedef struct s_pthread
 {
-	pthread_t		*tid;
-	pthread_mutex_t	*lock;
+	pthread_t		tid;
+	pthread_mutex_t	lock;
 	t_args			args;
+	t_philo			philo;
 }					t_pthread;
 
 /* ft_atoi_mod.c */

@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:24:29 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 18:59:07 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:20:40 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,25 @@ void	ft_print_state_change(int timestamp, int philo_num, int state_code)
 		printf("%d %d died\n", timestamp, philo_num);
 }
 
-int	ft_allocate_pthread(t_pthread *pthread, int philo_num)
+int	ft_allocate_pthread(t_pthread **pthread, int philo_num)
 {
+	/*
 	pthread->tid = malloc(sizeof(pthread_t) * philo_num);
 	if (pthread->tid == NULL)
 		return (1);
 	pthread->lock = malloc(sizeof(pthread_mutex_t) * philo_num);
 	if (pthread->lock == NULL)
 		return (1);
+	*/
+	*pthread = malloc(sizeof(t_pthread) * philo_num);
+	if (*pthread == NULL)
+		return (1);
 	return (0);
 }
-
+/*
 void	ft_free_pthread(t_pthread *pthread)
 {
 	free(pthread->tid);
 	free(pthread->lock);
 }
+*/

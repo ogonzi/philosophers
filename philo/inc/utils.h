@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/05 09:42:56 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:20:09 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@
 
 void	ft_print_error(char *s);
 void	ft_print_state_change(int timestamp, int philo_num, int state_code);
-int		ft_allocate_pthread(t_pthread *pthread, int philo_num);
+int		ft_allocate_pthread(t_pthread **pthread, int philo_num);
 void	ft_free_pthread(t_pthread *pthread);
 #endif
