@@ -6,13 +6,14 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:24:29 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/09 11:20:40 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 12:35:36 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "utils.h"
 
 int	ft_strlen(const char *s)
@@ -54,23 +55,21 @@ void	ft_print_state_change(int timestamp, int philo_num, int state_code)
 
 int	ft_allocate_pthread(t_pthread **pthread, int philo_num)
 {
-	/*
-	pthread->tid = malloc(sizeof(pthread_t) * philo_num);
-	if (pthread->tid == NULL)
-		return (1);
-	pthread->lock = malloc(sizeof(pthread_mutex_t) * philo_num);
-	if (pthread->lock == NULL)
-		return (1);
-	*/
 	*pthread = malloc(sizeof(t_pthread) * philo_num);
 	if (*pthread == NULL)
 		return (1);
 	return (0);
 }
-/*
-void	ft_free_pthread(t_pthread *pthread)
+
+int	ft_get_time(long int *time)
 {
-	free(pthread->tid);
-	free(pthread->lock);
+	struct timeval	current_time;
+
+	if (gettimeofday(&current_time, NULL) == -1)
+	{
+		ft_print_error(ERR_TIME);
+		return (1);
+	}
+	*time = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	return (0);
 }
-*/

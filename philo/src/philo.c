@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/09 11:36:15 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 12:37:44 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,16 @@ int	ft_init_mutex(t_pthread *pthread, int num_philo)
 
 int	ft_create_thread(t_pthread *pthread)
 {
-	int	i;
+	int			i;
+	long int	start_time;
 
 	i = -1;
+	if (ft_get_time(&start_time) == 1)
+		return (1);
 	while (++i < pthread->args.num_philo)
 	{
 		pthread[i].philo.philo_num = i;
+		pthread[i].args.start_tv_msec = start_time;
 		if (pthread_create(&(pthread[i].tid), NULL, ft_thread_routine, &pthread[i]) != 0)
 		{
 			ft_print_error(ERR_THREAD);

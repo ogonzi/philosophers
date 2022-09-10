@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/10 09:40:31 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 12:33:52 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,23 @@
 
 typedef struct s_args
 {
-	int	num_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	max_meals;
-	int	start_tv_msec;
-}		t_args;
+	int			num_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			max_meals;
+	long int	start_tv_msec;
+}				t_args;
 
 typedef struct s_philo
 {
-	int	eating;
-	int	sleeping;
-	int	thinking;
-	int	eat_counter;
-	int	start_time;
-	int	philo_num;
-}		t_philo;
+	int			eating;
+	int			sleeping;
+	int			thinking;
+	int			eat_counter;
+	long int	start_time;
+	int			philo_num;
+}				t_philo;
 
 typedef struct s_pthread
 {

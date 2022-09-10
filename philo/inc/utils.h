@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/09 11:20:09 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 12:36:09 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define ERR_MEM		"Memory allocation failed"
 # define ERR_MUTEX		"Mutex initialization failed"
 # define ERR_THREAD		"Thread creation failed"
+# define ERR_TIME		"Get time of day failed"
 
 # define FORK_CODE	0
 # define EAT_CODE	1
@@ -30,7 +31,8 @@
 /* utils.c */
 
 void	ft_print_error(char *s);
-void	ft_print_state_change(int timestamp, int philo_num, int state_code);
+void	ft_print_state_change(int timestamp, int philo_num,
+			int state_code);
 int		ft_allocate_pthread(t_pthread **pthread, int philo_num);
-void	ft_free_pthread(t_pthread *pthread);
+int		ft_get_time(long int *time);
 #endif
