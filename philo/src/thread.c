@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:02:53 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/11 10:56:27 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/11 12:14:04 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	ft_philo_will_die(t_pthread *pthread)
 
 	if (pthread->philo.eating == 1
 		&& pthread->args.time_to_eat > pthread->args.time_to_die)
+	{
+		ft_die_sequence(pthread, &timestamp);
+		return (1);
+	}
+	else if (pthread->philo.forks_used != 2 && pthread->philo.sleeping != 1)
 	{
 		ft_die_sequence(pthread, &timestamp);
 		return (1);
@@ -49,6 +54,7 @@ int	ft_grab_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 		ft_print_error(ERR_MUTEX_LOCK);
 		return (1);
 	}
+	this_pthread->philo.forks_used = 1;
 	if (ft_get_time(&timestamp) == 1)
 		return (0);
 	timestamp = timestamp - this_pthread->args.start_tv_msec;
@@ -60,6 +66,7 @@ int	ft_grab_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 			ft_print_error(ERR_MUTEX_LOCK);
 			return (1);
 		}
+		this_pthread->philo.forks_used++;
 		if (ft_get_time(&timestamp) == 1)
 			return (0);
 		timestamp = timestamp - this_pthread->args.start_tv_msec;
@@ -70,6 +77,7 @@ int	ft_grab_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 
 int	ft_leave_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 {
+	this_pthread->philo.forks_used--;
 	if (pthread_mutex_unlock(&this_pthread->lock) != 0)
 	{
 		ft_print_error(ERR_MUTEX_UNLOCK);
@@ -77,6 +85,7 @@ int	ft_leave_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 	}
 	if (left_pthread != NULL)
 	{
+		this_pthread->philo.forks_used--;
 		if (pthread_mutex_unlock(&left_pthread->lock) != 0)
 		{
 			ft_print_error(ERR_MUTEX_UNLOCK);
@@ -96,7 +105,7 @@ void	*ft_thread_routine(void *pthread)
 	if (this_pthread->args.num_philo == 1)
 		left_pthread = NULL;
 	else if (this_pthread->philo.philo_num > 0)
-		left_pthread = &this_pthread[this_pthread->philo.philo_num - 1];
+		left_pthread = &this_pthread[-1];
 	else
 		left_pthread = &this_pthread[this_pthread->args.num_philo - 1];
 	if (this_pthread->philo.philo_num % 2 == 1)
@@ -110,13 +119,16 @@ void	*ft_thread_routine(void *pthread)
 		{
 			if (ft_grab_forks(this_pthread, left_pthread) == 1)
 				return (0);
-			if (ft_get_time(&timestamp) == 1)
-				return (0);
-			timestamp = timestamp - this_pthread->args.start_tv_msec;
-			ft_print_state_change(timestamp, this_pthread->philo.philo_num + 1, EAT_CODE);
-			this_pthread->philo.start_time = timestamp;
-			this_pthread->philo.eating = 1;
-			this_pthread->philo.eat_counter = 1;
+			if (this_pthread->philo.forks_used == 2)
+			{
+				if (ft_get_time(&timestamp) == 1)
+					return (0);
+				timestamp = timestamp - this_pthread->args.start_tv_msec;
+				ft_print_state_change(timestamp, this_pthread->philo.philo_num + 1, EAT_CODE);
+				this_pthread->philo.start_time = timestamp;
+				this_pthread->philo.eating = 1;
+				this_pthread->philo.eat_counter = 1;
+			}
 			if (ft_philo_will_die(this_pthread) == 1)
 				return (0);
 			if (ft_usleep_ms(this_pthread->args.time_to_eat * 1000) == 1)
@@ -162,6 +174,7 @@ void	*ft_thread_routine(void *pthread)
 			if (ft_usleep_ms(this_pthread->args.time_to_eat * 1000) == 1)
 				return (0);
 		}
+		ft_leave_forks(this_pthread, left_pthread);
 	}
 	return (0);
 }

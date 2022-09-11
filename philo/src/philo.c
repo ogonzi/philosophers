@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/10 12:37:44 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/11 11:52:12 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ int	main(int argc, char *argv[])
 		return (1);
 	i = -1;
 	while (++i < pthread[0].args.num_philo)
+	{
 		pthread_join(pthread[i].tid, NULL);
+		pthread_mutex_destroy(&pthread[i].lock);
+	}
 	//ft_free_pthread(&pthread);
 	free(pthread);
 	return (0);
