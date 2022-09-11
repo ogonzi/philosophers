@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/10 17:24:57 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 18:00:30 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 # include "philo.h"
 
-# define ERR_NUM_ARGS	"The number of arguments is not correct"
-# define ERR_FORM_ARGS	"One or more arguments are not correctly formated"
-# define ERR_MEM		"Memory allocation failed"
-# define ERR_MUTEX		"Mutex initialization failed"
-# define ERR_THREAD		"Thread creation failed"
-# define ERR_TIME		"Get time of day failed"
-# define ERR_USLEEP		"Usleep failed"
+# define ERR_NUM_ARGS		"The number of arguments is not correct"
+# define ERR_FORM_ARGS		"One or more arguments are not correctly formated"
+# define ERR_MEM			"Memory allocation failed"
+# define ERR_MUTEX			"Mutex initialization failed"
+# define ERR_THREAD			"Thread creation failed"
+# define ERR_TIME			"Get time of day failed"
+# define ERR_USLEEP			"Usleep failed"
+# define ERR_MUTEX_LOCK		"Mutex lock failed"
+# define ERR_MUTEX_UNLOCK	"Mutex unlock failed"
 
 # define FORK_CODE	0
 # define EAT_CODE	1

@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/10 12:33:52 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:44:42 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_philo
 	int			eating;
 	int			sleeping;
 	int			thinking;
+	int			fork_used;
 	int			eat_counter;
 	long int	start_time;
 	int			philo_num;
