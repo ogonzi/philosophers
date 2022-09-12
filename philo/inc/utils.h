@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/10 18:00:30 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/12 10:35:04 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # define ERR_USLEEP			"Usleep failed"
 # define ERR_MUTEX_LOCK		"Mutex lock failed"
 # define ERR_MUTEX_UNLOCK	"Mutex unlock failed"
+# define ERR_JOIN			"Pthread join failed"
+# define ERR_MUTEX_DESTROY	"Mutex destroy failed"
+# define ERR_DETACH			"Pthread detach failed"
 
 # define FORK_CODE	0
 # define EAT_CODE	1
@@ -43,4 +46,6 @@ int		ft_get_time(long int *time);
 
 int		ft_usleep_ms(int sleep_ms);
 void	ft_die_sequence(t_pthread *pthread, long int *timestamp);
+void	ft_join_pthread(t_pthread *pthread);
+void	ft_destroy_mutex(t_pthread *pthread);
 #endif

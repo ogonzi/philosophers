@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 10:02:53 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/11 12:14:04 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/12 10:37:31 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	*ft_thread_routine(void *pthread)
 			if (ft_usleep_ms(this_pthread->args.time_to_eat * 1000) == 1)
 				return (0);
 		}
-		ft_leave_forks(this_pthread, left_pthread);
 	}
+	ft_leave_forks(this_pthread, left_pthread);
 	return (0);
 }

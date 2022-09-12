@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/11 11:31:47 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/12 10:25:48 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_philo
 	int			sleeping;
 	int			thinking;
 	int			forks_used;
+	int			died;
 	int			eat_counter;
 	long int	start_time;
 	int			philo_num;
@@ -51,5 +52,6 @@ int		ft_atoi_mod(const char *nptr);
 /* thread.c */
 
 void	*ft_thread_routine(void *args);
+int		ft_leave_forks(t_pthread *this_pthread, t_pthread *left_pthread);
 
 #endif

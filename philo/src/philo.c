@@ -6,13 +6,14 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/11 11:52:12 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/12 10:43:44 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include <string.h>
 
 int	ft_set_args(int argc, char *argv[], t_args *args)
 {
@@ -107,21 +108,22 @@ int	ft_create_thread(t_pthread *pthread)
 int	main(int argc, char *argv[])
 {
 	t_pthread		*pthread;
-	int				i;
 
 	if (ft_parse_and_allocate(argc, argv, &pthread) == 1)
 		return (1);
 	if (ft_init_mutex(pthread, pthread[0].args.num_philo) == 1)
-		return (1);
-	if (ft_create_thread(pthread) == 1)
-		return (1);
-	i = -1;
-	while (++i < pthread[0].args.num_philo)
 	{
-		pthread_join(pthread[i].tid, NULL);
-		pthread_mutex_destroy(&pthread[i].lock);
+		free(pthread);
+		return (1);
 	}
-	//ft_free_pthread(&pthread);
+	if (ft_create_thread(pthread) == 1)
+	{
+		ft_destroy_mutex(pthread);
+		free(pthread);
+		return (1);
+	}
+	ft_join_pthread(pthread);
+	ft_destroy_mutex(pthread);
 	free(pthread);
 	return (0);
 }
