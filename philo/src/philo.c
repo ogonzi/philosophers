@@ -6,12 +6,13 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/12 10:43:44 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/13 09:36:25 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "utils.h"
 #include <string.h>
 
@@ -103,6 +104,19 @@ int	ft_create_thread(t_pthread *pthread)
 		}
 	}
 	return (0);
+}
+
+int	ft_num_dead_philo(t_pthread *pthread)
+{
+	int	i;
+
+	i = -1;
+	while (++i < pthread->args.num_philo)
+	{
+		if (pthread[i].philo.died == 1)
+			return (i);
+	}
+	return (-1);
 }
 
 int	main(int argc, char *argv[])

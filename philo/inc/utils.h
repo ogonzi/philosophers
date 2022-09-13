@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/12 10:35:04 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/13 10:02:12 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ int		ft_usleep_ms(int sleep_ms);
 void	ft_die_sequence(t_pthread *pthread, long int *timestamp);
 void	ft_join_pthread(t_pthread *pthread);
 void	ft_destroy_mutex(t_pthread *pthread);
+int		ft_any_philo_dead(t_pthread *pthread);
 #endif
