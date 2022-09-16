@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/13 09:36:25 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 10:57:22 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,20 @@ int	ft_init_mutex(t_pthread *pthread, int num_philo)
 {
 	int	i;
 	
+	if (pthread_mutex_init(&pthread[0].die_lock, NULL) != 0)
+	{
+		ft_print_error(ERR_MUTEX);
+		return (1);
+	}
 	i = -1;
 	while (++i < num_philo)
 	{
-		if (pthread_mutex_init(&pthread[i].lock, NULL) != 0)
+		if (pthread_mutex_init(&pthread[i].fork_lock, NULL) != 0)
 		{
 			ft_print_error(ERR_MUTEX);
 			return (1);
 		}
+		//&pthread[i].die_lock = &pthread[0].die_lock;
 	}
 	return (0);
 }
@@ -93,6 +99,7 @@ int	ft_create_thread(t_pthread *pthread)
 	i = -1;
 	if (ft_get_time(&start_time) == 1)
 		return (1);
+	memset(&pthread->philo, 0, sizeof(t_philo));
 	while (++i < pthread->args.num_philo)
 	{
 		pthread[i].philo.philo_num = i;
@@ -104,19 +111,6 @@ int	ft_create_thread(t_pthread *pthread)
 		}
 	}
 	return (0);
-}
-
-int	ft_num_dead_philo(t_pthread *pthread)
-{
-	int	i;
-
-	i = -1;
-	while (++i < pthread->args.num_philo)
-	{
-		if (pthread[i].philo.died == 1)
-			return (i);
-	}
-	return (-1);
 }
 
 int	main(int argc, char *argv[])

@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/12 10:25:48 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 09:47:13 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_philo
 typedef struct s_pthread
 {
 	pthread_t		tid;
-	pthread_mutex_t	lock;
+	pthread_mutex_t	fork_lock;
+	pthread_mutex_t	die_lock;
 	t_args			args;
 	t_philo			philo;
 }					t_pthread;

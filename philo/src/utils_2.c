@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/14 17:54:54 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 11:03:38 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <string.h>
 #include <stdio.h>
 
-int	ft_usleep_ms(int sleep_ms)
+int	ft_usleep_usec(int sleep_usec)
 {
-	if (usleep(sleep_ms) == -1)
+	if (usleep(sleep_usec) == -1)
 	{
 		ft_print_error(ERR_USLEEP);
 		return (1);
@@ -41,12 +41,12 @@ int	ft_any_philo_dead(t_pthread *pthread)
 
 void	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 {
-	if (ft_usleep_ms((pthread->args.time_to_die) * 1000) == 1)
+	if (ft_usleep_usec((pthread->args.time_to_die) * 1000) == 1)
 		return ;
 	if (ft_any_philo_dead(pthread) == 0)
 	{
 		pthread->philo.died = 1;
-		ft_usleep_ms(1000);
+		ft_usleep_usec(1000);
 		if (ft_get_time(timestamp) == 1)
 			return ;
 		*timestamp = *timestamp - pthread->args.start_tv_msec;
@@ -74,12 +74,13 @@ void	ft_destroy_mutex(t_pthread *pthread)
 	while (++i < pthread[0].args.num_philo)
 	{
 		if (pthread[i].philo.forks_used != 0)
-			pthread_mutex_unlock(&pthread[i].lock);
-		errnum = pthread_mutex_destroy(&pthread[i].lock);
+			pthread_mutex_unlock(&pthread[i].fork_lock);
+		errnum = pthread_mutex_destroy(&pthread[i].fork_lock);
 		if (errnum != 0)
 		{
 			ft_print_error(ERR_MUTEX_DESTROY);
 			printf("%s\n", strerror(errnum));
 		}
+		pthread_mutex_destroy(&pthread[0].die_lock);
 	}
 }
