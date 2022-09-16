@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:45:58 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/16 11:38:26 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:38:48 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	ft_grab_forks(t_pthread *this_pthread, t_pthread *left_pthread,
 		ft_print_error(ERR_MUTEX_LOCK);
 		return (1);
 	}
-	this_pthread->philo.forks_used++;
 	if (ft_get_time(timestamp) == 1)
 		return (1);
-	*timestamp = *timestamp - this_pthread->args.start_tv_msec;
-	ft_print_state_change(*timestamp, this_pthread->philo.philo_num + 1,
-							FORK_CODE);
+	*timestamp = *timestamp - this_pthread->args.start_tv_usec;
+	ft_print_state_change(*timestamp / 1000,
+							this_pthread->philo.philo_num + 1, FORK_CODE);
+	this_pthread->philo.forks_used++;
 	if (left_pthread != NULL)
 	{
 		if (pthread_mutex_lock(&left_pthread->fork_lock) != 0)
@@ -51,12 +51,12 @@ int	ft_grab_forks(t_pthread *this_pthread, t_pthread *left_pthread,
 			ft_print_error(ERR_MUTEX_LOCK);
 			return (1);
 		}
-		this_pthread->philo.forks_used++;
 		if (ft_get_time(timestamp) == 1)
 			return (1);
-		*timestamp = *timestamp - this_pthread->args.start_tv_msec;
-		ft_print_state_change(*timestamp, this_pthread->philo.philo_num + 1,
-							FORK_CODE);
+		*timestamp = *timestamp - this_pthread->args.start_tv_usec;
+		ft_print_state_change(*timestamp / 1000,
+								this_pthread->philo.philo_num + 1, FORK_CODE);
+		this_pthread->philo.forks_used++;
 	}
 	return (0);
 }
@@ -84,19 +84,18 @@ int	ft_leave_forks(t_pthread *this_pthread, t_pthread *left_pthread)
 int	ft_eat(t_pthread *this_pthread, t_pthread *left_pthread,
 			long int *timestamp)
 {
-	if (this_pthread->philo.thinking == 1)
-		this_pthread->philo.thinking = 0;
-	else
-		if (ft_grab_forks(this_pthread, left_pthread, timestamp) == 1)
-			return (1);
+	if (ft_grab_forks(this_pthread, left_pthread, timestamp) == 1)
+		return (1);
 	if (this_pthread->philo.forks_used != 2)
 	{
 		ft_die_sequence(this_pthread, timestamp);
 		return (0);
 	}
-	ft_print_state_change(*timestamp, this_pthread->philo.philo_num + 1,
+	ft_print_state_change(*timestamp / 1000, this_pthread->philo.philo_num + 1,
 			EAT_CODE);
 	this_pthread->philo.start_time = *timestamp;
+	if (this_pthread->philo.thinking == 1)
+		this_pthread->philo.thinking = 0;
 	this_pthread->philo.eating = 1;
 	if (ft_usleep_usec(this_pthread->args.time_to_eat * 1000) == 1)
 		return (1);
@@ -110,27 +109,26 @@ int	ft_sleep(t_pthread *this_pthread, long int *timestamp)
 {
 	if (ft_get_time(timestamp) == 1)
 		return (1);
-	*timestamp = *timestamp - this_pthread->args.start_tv_msec;
+	*timestamp = *timestamp - this_pthread->args.start_tv_usec;
+	ft_print_state_change(*timestamp / 1000,
+							this_pthread->philo.philo_num + 1, SLEEP_CODE);
 	this_pthread->philo.eating = 0;
-	ft_print_state_change(*timestamp, this_pthread->philo.philo_num + 1,
-							SLEEP_CODE);
 	this_pthread->philo.sleeping = 1;
 	if (ft_usleep_usec(this_pthread->args.time_to_sleep * 1000) == 1)
 		return (1);
 	return (0);
 }
 
-int	ft_think(t_pthread *this_pthread, t_pthread *left_pthread,
-				long int *timestamp)
+int	ft_think(t_pthread *this_pthread, long int *timestamp)
 {
 	if (ft_get_time(timestamp) == 1)
 		return (1);
-	*timestamp = *timestamp - this_pthread->args.start_tv_msec;
+	*timestamp = *timestamp - this_pthread->args.start_tv_usec;
+	ft_print_state_change(*timestamp / 1000,
+							this_pthread->philo.philo_num + 1, THINK_CODE);
 	this_pthread->philo.sleeping = 0;
-	ft_print_state_change(*timestamp, this_pthread->philo.philo_num + 1,
-							THINK_CODE);
 	this_pthread->philo.thinking = 1;
-	if (ft_grab_forks(this_pthread, left_pthread, timestamp) == 1)
+	if (ft_usleep_usec(500) == 1)
 		return (1);
 	return (0);
 }
@@ -156,7 +154,7 @@ void	*ft_thread_routine(void *pthread)
 			break ;
 		if (ft_sleep(this_pthread, &timestamp) == 1)
 			return (0);
-		if (ft_think(this_pthread, left_pthread, &timestamp) == 1)
+		if (ft_think(this_pthread, &timestamp) == 1)
 			return (0);
 	}
 	return (pthread);

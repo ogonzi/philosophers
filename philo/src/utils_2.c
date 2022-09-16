@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/16 11:03:38 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:16:44 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 		ft_usleep_usec(1000);
 		if (ft_get_time(timestamp) == 1)
 			return ;
-		*timestamp = *timestamp - pthread->args.start_tv_msec;
-		ft_print_state_change(*timestamp, pthread->philo.philo_num + 1, DIE_CODE);
+		*timestamp = *timestamp - pthread->args.start_tv_usec;
+		ft_print_state_change(*timestamp / 1000,
+								pthread->philo.philo_num + 1, DIE_CODE);
 	}
 }
 

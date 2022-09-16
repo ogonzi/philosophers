@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/16 10:57:22 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:15:11 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_create_thread(t_pthread *pthread)
 	while (++i < pthread->args.num_philo)
 	{
 		pthread[i].philo.philo_num = i;
-		pthread[i].args.start_tv_msec = start_time;
+		pthread[i].args.start_tv_usec = start_time;
 		if (pthread_create(&(pthread[i].tid), NULL, ft_thread_routine, &pthread[i]) != 0)
 		{
 			ft_print_error(ERR_THREAD);

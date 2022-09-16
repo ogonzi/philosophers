@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/16 09:47:13 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:11:30 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_args
 	int			time_to_eat;
 	int			time_to_sleep;
 	int			max_meals;
-	long int	start_tv_msec;
+	long int	start_tv_usec;
 }				t_args;
 
 typedef struct s_philo

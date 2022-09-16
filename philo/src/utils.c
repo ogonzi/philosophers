@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:24:29 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/13 10:11:11 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:16:05 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	ft_get_time(long int *time)
 		ft_print_error(ERR_TIME);
 		return (1);
 	}
-	*time = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+	*time = current_time.tv_sec * 1000000 + current_time.tv_usec;
 	return (0);
 }
