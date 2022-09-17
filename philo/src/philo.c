@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/16 16:15:11 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/17 12:35:24 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ int	ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread)
 
 int	ft_init_mutex(t_pthread *pthread, int num_philo)
 {
-	int	i;
-	
-	if (pthread_mutex_init(&pthread[0].die_lock, NULL) != 0)
+	int				i;
+	pthread_mutex_t	*die_mutex;
+
+	die_mutex = malloc(sizeof(pthread_mutex_t));
+	if (pthread_mutex_init(die_mutex, NULL) != 0)
 	{
 		ft_print_error(ERR_MUTEX);
 		return (1);
@@ -86,7 +88,7 @@ int	ft_init_mutex(t_pthread *pthread, int num_philo)
 			ft_print_error(ERR_MUTEX);
 			return (1);
 		}
-		//&pthread[i].die_lock = &pthread[0].die_lock;
+		pthread[i].die_lock = die_mutex;
 	}
 	return (0);
 }
