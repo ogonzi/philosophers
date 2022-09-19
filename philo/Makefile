@@ -6,7 +6,7 @@
 #    By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/18 10:00:13 by ogonzale          #+#    #+#              #
-#    Updated: 2022/09/10 17:16:10 by ogonzale         ###   ########.fr        #
+#    Updated: 2022/09/19 09:49:16 by ogonzale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ WHITE 		:= \033[0;97m
 
 #Sources
 
-SRC_FILES	:=	philo thread ft_atoi_mod utils utils_2 
+SRC_FILES	:=	philo thread ft_atoi_mod activity utils utils_2 
 
 SRC 		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))

@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/17 12:30:36 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:55:54 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_pthread
 {
 	pthread_t		tid;
 	pthread_mutex_t	fork_lock;
-	pthread_mutex_t	*die_lock;
+	pthread_mutex_t	*all_lock;
 	t_args			args;
 	t_philo			philo;
 }					t_pthread;
@@ -53,6 +53,12 @@ int		ft_atoi_mod(const char *nptr);
 /* thread.c */
 
 void	*ft_thread_routine(void *args);
-int		ft_leave_forks(t_pthread *this_pthread, t_pthread *left_pthread);
+int		ft_philo_will_die(t_pthread *pthread);
+
+/* activity.c */
+
+int		ft_eat(t_pthread *this_pthread, t_pthread *left_pthread, long int *t);
+int		ft_sleep(t_pthread *this_pthread, long int *t);
+int		ft_think(t_pthread *this_pthread, long int *t);
 
 #endif

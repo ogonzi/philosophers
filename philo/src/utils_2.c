@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/17 12:33:46 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:39:21 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,22 @@ void	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 		return ;
 	if (ft_any_philo_dead(pthread) == 0)
 	{
-		pthread_mutex_lock(pthread->die_lock);
+		if (pthread_mutex_lock(pthread->all_lock) != 0)
+		{
+			ft_print_error(ERR_MUTEX_LOCK);
+			return ;
+		}
 		pthread->philo.died = 1;
-		ft_usleep_usec(1000);
 		if (ft_get_time(timestamp) == 1)
 			return ;
 		*timestamp = *timestamp - pthread->args.start_tv_usec;
 		ft_print_state_change(*timestamp / 1000,
 								pthread->philo.philo_num + 1, DIE_CODE);
-		pthread_mutex_unlock(pthread->die_lock);
+		if (pthread_mutex_unlock(pthread->all_lock) != 0)
+		{
+			ft_print_error(ERR_MUTEX_UNLOCK);
+			return ;
+		}
 	}
 }
 
