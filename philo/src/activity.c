@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:45:58 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 10:12:09 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:05:54 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	ft_eat(t_pthread *this_pthread, t_pthread *left_pthread,
 
 int	ft_sleep(t_pthread *this_pthread, long int *timestamp)
 {
+	if (ft_any_philo_dead(this_pthread) == 1)
+		return (0);
 	if (ft_print_sequence(this_pthread, SLEEP_CODE, timestamp) != 0)
 		return (1);
 	this_pthread->philo.eating = 0;
@@ -108,6 +110,8 @@ int	ft_sleep(t_pthread *this_pthread, long int *timestamp)
 
 int	ft_think(t_pthread *this_pthread, long int *timestamp)
 {
+	if (ft_any_philo_dead(this_pthread) == 1)
+		return (0);
 	if (ft_print_sequence(this_pthread, THINK_CODE, timestamp) != 0)
 		return (1);
 	this_pthread->philo.sleeping = 0;

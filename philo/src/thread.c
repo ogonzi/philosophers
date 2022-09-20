@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 10:10:10 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:05:33 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,30 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+
+int	ft_create_thread(t_pthread *pthread)
+{
+	int			i;
+	long int	start_time;
+
+	i = -1;
+	if (ft_get_time(&start_time) == 1)
+		return (1);
+	memset(&pthread->philo, 0, sizeof(t_philo));
+	while (++i < pthread->args.num_philo)
+	{
+		pthread[i].philo.philo_num = i;
+		pthread[i].args.start_tv_usec = start_time;
+		if (pthread_create(&(pthread[i].tid), NULL,
+				ft_thread_routine, &pthread[i]) != 0)
+		{
+			ft_print_error(ERR_THREAD);
+			return (1);
+		}
+	}
+	return (0);
+}
 
 int	ft_print_sequence(t_pthread *pthread, int status_code, long int *timestamp)
 {
@@ -72,11 +96,7 @@ void	*ft_thread_routine(void *pthread)
 			return (0);
 		if (this_pthread->philo.eat_counter == this_pthread->args.max_meals)
 			break ;
-		if (ft_any_philo_dead(this_pthread) == 1)
-			return (0);
 		if (ft_sleep(this_pthread, &t) == 1)
-			return (0);
-		if (ft_any_philo_dead(this_pthread) == 1)
 			return (0);
 		if (ft_think(this_pthread, &t) == 1)
 			return (0);

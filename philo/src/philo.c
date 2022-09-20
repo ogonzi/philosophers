@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 09:54:38 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:04:00 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,6 @@ int	ft_init_mutex(t_pthread *pthread, int num_philo)
 	return (0);
 }
 
-int	ft_create_thread(t_pthread *pthread)
-{
-	int			i;
-	long int	start_time;
-
-	i = -1;
-	if (ft_get_time(&start_time) == 1)
-		return (1);
-	memset(&pthread->philo, 0, sizeof(t_philo));
-	while (++i < pthread->args.num_philo)
-	{
-		pthread[i].philo.philo_num = i;
-		pthread[i].args.start_tv_usec = start_time;
-		if (pthread_create(&(pthread[i].tid), NULL,
-				ft_thread_routine, &pthread[i]) != 0)
-		{
-			ft_print_error(ERR_THREAD);
-			return (1);
-		}
-	}
-	return (0);
-}
-
 int	ft_check_sim_end(t_pthread *pthread)
 {
 	int			i;
@@ -134,10 +111,7 @@ int	ft_check_sim_end(t_pthread *pthread)
 				return (0);
 			if (timestamp / 1000 - pthread[i].philo.start_time
 				> pthread->args.time_to_die)
-			{
-				ft_die_sequence(&pthread[i], &timestamp);
-				return (0);
-			}
+				return (ft_die_sequence(&pthread[i], &timestamp));
 		}
 		if (ft_usleep_usec(5000) != 0)
 			return (1);
@@ -151,7 +125,7 @@ int	main(int argc, char *argv[])
 
 	if (ft_parse_and_allocate(argc, argv, &pthread) == 1)
 		return (1);
-	if (ft_init_mutex(pthread, pthread[0].args.num_philo) == 1)
+	if (ft_init_mutex(pthread, pthread->args.num_philo) == 1)
 	{
 		free(pthread);
 		return (1);
