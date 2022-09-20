@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:42:45 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:24:26 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ int	ft_any_philo_dead(t_pthread *pthread)
 	int	i;
 
 	i = -1;
+	if (pthread_mutex_lock(pthread->all_lock) != 0)
+		return (ft_print_error(ERR_MUTEX_LOCK));
 	while (++i < pthread->args.num_philo)
 		if (pthread[i - pthread->philo.philo_num].philo.died == 1)
+		{
+			pthread_mutex_unlock(pthread->all_lock);
 			return (1);
+		}
+	if (pthread_mutex_unlock(pthread->all_lock))
+		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	return (0);
 }
 

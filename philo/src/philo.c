@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:57:45 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:16:38 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_check_sim_end(t_pthread *pthread)
 	{
 		i = -1;
 		num_meals = 0;
-		if (ft_get_time(&timestamp) == 1)
+		if (ft_get_time(&timestamp) != 0)
 			return (1);
 		timestamp = timestamp - pthread->args.start_tv_usec;
 		while (++i < pthread->args.num_philo)

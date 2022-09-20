@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 09:45:58 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:47:56 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 12:26:53 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	ft_eat(t_pthread *this_pthread, t_pthread *left_pthread,
 	}
 	ft_print_state_change(*timestamp / 1000, this_pthread->philo.philo_num + 1,
 		EAT_CODE);
-	if (pthread_mutex_unlock(this_pthread->all_lock) != 0)
-		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	this_pthread->philo.start_time = *timestamp / 1000;
 	this_pthread->philo.thinking = 0;
 	this_pthread->philo.eating = 1;
+	if (pthread_mutex_unlock(this_pthread->all_lock) != 0)
+		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	if (ft_usleep_usec(this_pthread->args.time_to_eat * 1000) != 0)
 		return (1);
 	this_pthread->philo.eat_counter++;
