@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 09:55:18 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 09:59:14 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ void	ft_join_pthread(t_pthread *pthread)
 
 	i = -1;
 	while (++i < pthread[0].args.num_philo)
-	{
 		pthread_join(pthread[i].tid, NULL);
-	}
 }
 
 void	ft_destroy_mutex(t_pthread *pthread)

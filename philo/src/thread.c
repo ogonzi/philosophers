@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 09:56:04 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:10:10 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include <sys/time.h>
 #include <stdio.h>
 #include <unistd.h>
+
+int	ft_print_sequence(t_pthread *pthread, int status_code, long int *timestamp)
+{
+	if (pthread_mutex_lock(pthread->all_lock) != 0)
+	{
+		ft_print_error(ERR_MUTEX_LOCK);
+		return (1);
+	}
+	if (ft_get_time(timestamp) == 1)
+		return (1);
+	*timestamp = *timestamp - pthread->args.start_tv_usec;
+	ft_print_state_change(*timestamp / 1000,
+		pthread->philo.philo_num + 1, status_code);
+	if (pthread->philo.forks_used != 1)
+	{
+		if (pthread_mutex_unlock(pthread->all_lock) != 0)
+		{
+			ft_print_error(ERR_MUTEX_UNLOCK);
+			return (1);
+		}
+	}
+	return (0);
+}
 
 void	ft_get_pthreads(void *pthread, t_pthread **this_pthread,
 						t_pthread **left_pthread)

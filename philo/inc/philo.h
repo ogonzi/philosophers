@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 08:56:52 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:03:26 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int		ft_atoi_mod(const char *nptr);
 
 /* thread.c */
 
+int		ft_print_sequence(t_pthread *pthread, int status_code,
+			long int *timestamp);
 void	*ft_thread_routine(void *args);
 int		ft_philo_will_die(t_pthread *pthread);
 
