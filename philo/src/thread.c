@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/19 11:14:55 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 09:25:58 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_get_pthreads(void *pthread, t_pthread **this_pthread,
 	else
 		*left_pthread = &(*this_pthread)[num_philo - 1];
 }
-
+/*
 int	ft_philo_will_die(t_pthread *pthread)
 {
 	long int		timestamp;
@@ -59,7 +59,7 @@ int	ft_philo_will_die(t_pthread *pthread)
 	}
 	return (0);
 }
-
+*/
 void	*ft_thread_routine(void *pthread)
 {
 	t_pthread	*this_pthread;
@@ -91,6 +91,8 @@ void	*ft_thread_routine(void *pthread)
 			return (0);
 		if (ft_think(this_pthread, &t) == 1)
 			return (0);
+		if (this_pthread->philo.died == 1)
+			return (pthread);
 	}
 	return (pthread);
 }

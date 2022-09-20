@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/19 10:39:21 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 09:04:50 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	ft_any_philo_dead(t_pthread *pthread)
 
 void	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 {
-	if (ft_usleep_usec((pthread->args.time_to_die) * 1000) == 1)
-		return ;
+	//if (ft_usleep_usec((pthread->args.time_to_die) * 1000) == 1)
+	//	return ;
 	if (ft_any_philo_dead(pthread) == 0)
 	{
 		if (pthread_mutex_lock(pthread->all_lock) != 0)
