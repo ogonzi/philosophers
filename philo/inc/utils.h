@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:00:45 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:26:51 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 /* utils.c */
 
-void	ft_print_error(char *s);
+int		ft_print_error(char *s);
 void	ft_print_state_change(int timestamp, int philo_num,
 			int state_code);
 int		ft_allocate_pthread(t_pthread **pthread, int philo_num);
@@ -46,7 +46,7 @@ int		ft_get_time(long int *time);
 
 int		ft_usleep_usec(int sleep_usec);
 int		ft_die_sequence(t_pthread *pthread, long int *timestamp);
-void	ft_join_pthread(t_pthread *pthread);
-void	ft_destroy_mutex(t_pthread *pthread);
+int		ft_join_pthread(t_pthread *pthread);
+int		ft_destroy_mutex(t_pthread *pthread);
 int		ft_any_philo_dead(t_pthread *pthread);
 #endif

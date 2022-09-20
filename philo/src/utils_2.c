@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:01:08 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:42:45 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@
 int	ft_usleep_usec(int sleep_usec)
 {
 	if (usleep(sleep_usec) == -1)
-	{
-		ft_print_error(ERR_USLEEP);
-		return (1);
-	}
+		return (ft_print_error(ERR_USLEEP));
 	return (0);
 }
 
@@ -32,10 +29,8 @@ int	ft_any_philo_dead(t_pthread *pthread)
 
 	i = -1;
 	while (++i < pthread->args.num_philo)
-	{
 		if (pthread[i - pthread->philo.philo_num].philo.died == 1)
 			return (1);
-	}
 	return (0);
 }
 
@@ -44,10 +39,7 @@ int	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 	if (ft_any_philo_dead(pthread) == 0)
 	{
 		if (pthread_mutex_lock(pthread->all_lock) != 0)
-		{
-			ft_print_error(ERR_MUTEX_LOCK);
-			return (1);
-		}
+			return (ft_print_error(ERR_MUTEX_LOCK));
 		pthread->philo.died = 1;
 		if (ft_get_time(timestamp) == 1)
 			return (1);
@@ -55,38 +47,33 @@ int	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 		ft_print_state_change(*timestamp / 1000,
 			pthread->philo.philo_num + 1, DIE_CODE);
 		if (pthread_mutex_unlock(pthread->all_lock) != 0)
-		{
-			ft_print_error(ERR_MUTEX_UNLOCK);
-			return (1);
-		}
+			return (ft_print_error(ERR_MUTEX_UNLOCK));
 	}
 	return (0);
 }
 
-void	ft_join_pthread(t_pthread *pthread)
+int	ft_join_pthread(t_pthread *pthread)
 {
 	int	i;
 
 	i = -1;
 	while (++i < pthread[0].args.num_philo)
-		pthread_join(pthread[i].tid, NULL);
+		if (pthread_join(pthread[i].tid, NULL) != 0)
+			return (ft_print_error(ERR_JOIN));
+	return (0);
 }
 
-void	ft_destroy_mutex(t_pthread *pthread)
+int	ft_destroy_mutex(t_pthread *pthread)
 {
 	int	i;
-	int	errnum;
 
 	i = -1;
 	while (++i < pthread[0].args.num_philo)
 	{
 		if (pthread[i].philo.forks_used != 0)
 			pthread_mutex_unlock(&pthread[i].fork_lock);
-		errnum = pthread_mutex_destroy(&pthread[i].fork_lock);
-		if (errnum != 0)
-		{
-			ft_print_error(ERR_MUTEX_DESTROY);
-			printf("%s\n", strerror(errnum));
-		}
+		if (pthread_mutex_destroy(&pthread[i].fork_lock) != 0)
+			return (ft_print_error(ERR_MUTEX_DESTROY));
 	}
+	return (0);
 }

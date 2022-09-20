@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:03:56 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:36:43 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ typedef struct s_pthread
 	t_args			args;
 	t_philo			philo;
 }					t_pthread;
+
+/* parse.c */
+int		ft_set_args(int argc, char *argv[], t_args *args);
+int		ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread);
 
 /* ft_atoi_mod.c */
 

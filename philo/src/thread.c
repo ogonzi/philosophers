@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:05:33 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:45:55 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ int	ft_create_thread(t_pthread *pthread)
 		pthread[i].args.start_tv_usec = start_time;
 		if (pthread_create(&(pthread[i].tid), NULL,
 				ft_thread_routine, &pthread[i]) != 0)
-		{
-			ft_print_error(ERR_THREAD);
-			return (1);
-		}
+			return (ft_print_error(ERR_THREAD));
 	}
 	return (0);
 }
@@ -42,23 +39,15 @@ int	ft_create_thread(t_pthread *pthread)
 int	ft_print_sequence(t_pthread *pthread, int status_code, long int *timestamp)
 {
 	if (pthread_mutex_lock(pthread->all_lock) != 0)
-	{
-		ft_print_error(ERR_MUTEX_LOCK);
-		return (1);
-	}
+		return (ft_print_error(ERR_MUTEX_LOCK));
 	if (ft_get_time(timestamp) == 1)
 		return (1);
 	*timestamp = *timestamp - pthread->args.start_tv_usec;
 	ft_print_state_change(*timestamp / 1000,
 		pthread->philo.philo_num + 1, status_code);
 	if (pthread->philo.forks_used != 1)
-	{
 		if (pthread_mutex_unlock(pthread->all_lock) != 0)
-		{
-			ft_print_error(ERR_MUTEX_UNLOCK);
-			return (1);
-		}
-	}
+			return (ft_print_error(ERR_MUTEX_UNLOCK));
 	return (0);
 }
 
@@ -85,7 +74,7 @@ void	*ft_thread_routine(void *pthread)
 
 	ft_get_pthreads(pthread, &this_pthread, &left_pthread);
 	if (this_pthread->philo.philo_num % 2 == 1)
-		if (ft_usleep_usec(this_pthread->args.time_to_eat * 1000) == 1)
+		if (ft_usleep_usec(this_pthread->args.time_to_eat * 1000) != 0)
 			return (0);
 	while (this_pthread->philo.eat_counter < this_pthread->args.max_meals
 		|| this_pthread->args.max_meals == -1)
