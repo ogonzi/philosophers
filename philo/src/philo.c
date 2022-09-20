@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 09:22:06 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/09/20 09:54:38 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ int	ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread)
 		ft_print_error(ERR_MEM);
 		return (1);
 	}
-	
 	i = -1;
 	while (++i < args.num_philo)
 		(*pthread)[i].args = args;
-	
 	return (0);
 }
 
@@ -106,7 +104,8 @@ int	ft_create_thread(t_pthread *pthread)
 	{
 		pthread[i].philo.philo_num = i;
 		pthread[i].args.start_tv_usec = start_time;
-		if (pthread_create(&(pthread[i].tid), NULL, ft_thread_routine, &pthread[i]) != 0)
+		if (pthread_create(&(pthread[i].tid), NULL,
+				ft_thread_routine, &pthread[i]) != 0)
 		{
 			ft_print_error(ERR_THREAD);
 			return (1);
@@ -120,7 +119,7 @@ int	ft_check_sim_end(t_pthread *pthread)
 	int			i;
 	int			num_meals;
 	long int	timestamp;
-	
+
 	while (1)
 	{
 		i = -1;
