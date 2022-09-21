@@ -6,7 +6,7 @@
 #    By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/18 10:00:13 by ogonzale          #+#    #+#              #
-#    Updated: 2022/09/20 11:36:53 by ogonzale         ###   ########.fr        #
+#    Updated: 2022/09/21 17:00:34 by ogonzale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,11 @@
 
 NAME 		:= philo
 INC		 	:= inc/
-HEADER 		= -I$(INC)
+INCLUDE 	:= -I$(INC)
 SRC_DIR 	:= src/
 OBJ_DIR 	:= obj/
 CC 			:= cc
-CFLAGS 		:= -Wall -Wextra -Werror -pthread -g3
-FSANITIZE	:= -fsanitize=address -g3
+CFLAGS 		:= -Wall -Wextra -Werror -pthread
 RM 			:= rm -f
 
 # Colors
@@ -43,22 +42,16 @@ OBJ 		= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
 
 ###
 
-OBJF := .cache_exists
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
+	@mkdir -p $(dir $@)
+	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
+	@$(CC) -MT $@ -MMD -MP $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
-	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-	@$(CC) -MT $@ -MMD -MP $(CFLAGS) $(HEADER) -O3 -c $< -o $@
-
-$(OBJF):
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(OBJ_DIR)$(MAND_DIR)
-	@touch $(OBJF)
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
@@ -80,4 +73,4 @@ norm:
 	
 .PHONY:	all clean fclean re norm
 
--include $(OBJ:%.o=%.d) $(BOBJ:%.o=%.d)
+-include $(OBJ:%.o=%.d)
