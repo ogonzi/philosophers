@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/01 13:41:03 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:36:51 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ int	ft_print_sequence(t_pthread *pthread, int status_code, long int *timestamp)
 		pthread->philo.philo_num + 1, status_code);
 	if (pthread_mutex_unlock(pthread->all_lock) != 0)
 		return (ft_print_error(ERR_MUTEX_UNLOCK));
-	//if (pthread->philo.forks_used != 1)
-	//	if (pthread_mutex_unlock(pthread->all_lock) != 0)
-	//		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	return (0);
 }
 
