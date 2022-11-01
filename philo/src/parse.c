@@ -6,11 +6,12 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:35:10 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:50:40 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:18:09 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include <stdlib.h>
 
 int	ft_set_args(int argc, char *argv[], t_args *args)
 {
@@ -41,6 +42,7 @@ int	ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread)
 {
 	int		i;
 	t_args	args;
+	int		*end;
 
 	if (argc < 5 || argc > 6)
 		return (ft_print_error(ERR_NUM_ARGS));
@@ -48,8 +50,12 @@ int	ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread)
 		return (ft_print_error(ERR_FORM_ARGS));
 	if (ft_allocate_pthread(pthread, args.num_philo) != 0)
 		return (1);
+	end = malloc(sizeof(int));
 	i = -1;
 	while (++i < args.num_philo)
+	{
 		(*pthread)[i].args = args;
+		(*pthread)[i].end = end;
+	}
 	return (0);
 }

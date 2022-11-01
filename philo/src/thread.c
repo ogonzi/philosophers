@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 09:26:38 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:45:55 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:41:03 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	ft_print_sequence(t_pthread *pthread, int status_code, long int *timestamp)
 	*timestamp = *timestamp - pthread->args.start_tv_usec;
 	ft_print_state_change(*timestamp / 1000,
 		pthread->philo.philo_num + 1, status_code);
-	if (pthread->philo.forks_used != 1)
-		if (pthread_mutex_unlock(pthread->all_lock) != 0)
-			return (ft_print_error(ERR_MUTEX_UNLOCK));
+	if (pthread_mutex_unlock(pthread->all_lock) != 0)
+		return (ft_print_error(ERR_MUTEX_UNLOCK));
+	//if (pthread->philo.forks_used != 1)
+	//	if (pthread_mutex_unlock(pthread->all_lock) != 0)
+	//		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	return (0);
 }
 
@@ -79,7 +81,7 @@ void	*ft_thread_routine(void *pthread)
 	while (this_pthread->philo.eat_counter < this_pthread->args.max_meals
 		|| this_pthread->args.max_meals == -1)
 	{
-		if (ft_any_philo_dead(this_pthread) == 1)
+		if (*this_pthread->end == 1)
 			return (0);
 		if (ft_eat(this_pthread, left_pthread, &t) == 1)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 17:14:04 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 12:24:26 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:40:07 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_usleep_usec(int sleep_usec)
 		return (ft_print_error(ERR_USLEEP));
 	return (0);
 }
-
+/*
 int	ft_any_philo_dead(t_pthread *pthread)
 {
 	int	i;
@@ -40,19 +40,27 @@ int	ft_any_philo_dead(t_pthread *pthread)
 		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	return (0);
 }
+*/
+int	ft_any_philo_dead(t_pthread *pthread)
+{
+	if (*pthread->end == 1)
+		return (1);
+	return (0);
+}
 
 int	ft_die_sequence(t_pthread *pthread, long int *timestamp)
 {
-	if (ft_any_philo_dead(pthread) == 0)
+	if (*pthread->end != 1)
 	{
 		if (pthread_mutex_lock(pthread->all_lock) != 0)
 			return (ft_print_error(ERR_MUTEX_LOCK));
 		pthread->philo.died = 1;
+		*pthread->end = 1;
 		if (ft_get_time(timestamp) == 1)
 			return (1);
 		*timestamp = *timestamp - pthread->args.start_tv_usec;
 		ft_print_state_change(*timestamp / 1000,
-			pthread->philo.philo_num + 1, DIE_CODE);
+				pthread->philo.philo_num + 1, DIE_CODE);
 		if (pthread_mutex_unlock(pthread->all_lock) != 0)
 			return (ft_print_error(ERR_MUTEX_UNLOCK));
 	}
@@ -74,6 +82,8 @@ int	ft_destroy_mutex(t_pthread *pthread)
 {
 	int	i;
 
+	//if (pthread_mutex_unlock(pthread->all_lock) != 0)
+	//	return (ft_print_error(ERR_MUTEX_UNLOCK));
 	i = -1;
 	while (++i < pthread[0].args.num_philo)
 	{

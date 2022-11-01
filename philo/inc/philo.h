@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:36:43 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:13:25 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_pthread
 	pthread_mutex_t	*all_lock;
 	t_args			args;
 	t_philo			philo;
+	int				*end;
 }					t_pthread;
 
 /* parse.c */

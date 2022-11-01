@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:32:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 12:16:38 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:48:37 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ int	ft_check_sim_end(t_pthread *pthread)
 			num_meals += pthread[i].philo.eat_counter;
 			if (num_meals == pthread->args.max_meals * pthread->args.num_philo)
 				return (0);
+			if (*pthread->end == 1)
+				return (0);
 			if (timestamp / 1000 - pthread[i].philo.start_time
 				> pthread->args.time_to_die)
 				return (ft_die_sequence(&pthread[i], &timestamp));
 		}
-		if (ft_usleep_usec(5000) != 0)
-			return (1);
+		//if (ft_usleep_usec(5000) != 0)
+		//	return (1);
 	}
 	return (1);
 }
