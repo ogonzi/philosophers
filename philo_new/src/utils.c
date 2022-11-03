@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:27:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/02 16:28:09 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:56:35 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,13 @@ int	ft_print_error(char *s)
 	return (1);
 }
 
-void	ft_print_state_change(int timestamp, int philo_num, int state_code)
+int	ft_clean_exit_error(t_data *data, int destroy_mutex)
 {
-	if (state_code == FORK_CODE)
-		printf("%d %d has taken a fork\n", timestamp, philo_num);
-	if (state_code == EAT_CODE)
-		printf("%d %d is eating\n", timestamp, philo_num);
-	if (state_code == SLEEP_CODE)
-		printf("%d %d is sleeping\n", timestamp, philo_num);
-	if (state_code == THINK_CODE)
-		printf("%d %d is thinking\n", timestamp, philo_num);
-	if (state_code == DIE_CODE)
-		printf("%d %d died\n", timestamp, philo_num);
+	if (destroy_mutex == 1)
+		printf("TODO: destroy mutex\n");
+	free(data->philo);
+	free(data);
+	return (0);
 }
 
 int	ft_get_time(long int *time)

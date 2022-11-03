@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 16:21:13 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:04:27 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define ERR_NUM_ARGS		"The number of arguments is not correct"
 # define ERR_FORM_ARGS		"One or more arguments are not correctly formated"
 # define ERR_MEM			"Memory allocation failed"
-# define ERR_MUTEX			"Mutex initialization failed"
+# define ERR_MUTEX_INIT		"Mutex initialization failed"
 # define ERR_THREAD			"Thread creation failed"
 # define ERR_TIME			"Get time of day failed"
 # define ERR_USLEEP			"Usleep failed"
@@ -38,9 +38,13 @@
 
 int		ft_strlen(const char *s);
 int		ft_print_error(char *s);
-void	ft_print_state_change(int timestamp, int philo_num, int state_code);
+int		ft_clean_exit_error(t_data *data, int destroy_mutex);
 int		ft_get_time(long int *time);
 
 /* utils_2.c */
+
+/* ft_atoi_mod.c */
+
+long long int	ft_atoi_mod(const char *nptr);
 
 #endif
