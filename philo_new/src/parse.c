@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:35:10 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 16:41:03 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:15:45 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_set_data(int argc, char *argv[], t_data *data)
 	if (argc == 6)
 	{
 		data->max_meals = ft_atoi_mod(argv[5]);
-		if (data->max_meals <= 0)
+		if (data->max_meals < 0)
 			return (1);
 	}
 	else

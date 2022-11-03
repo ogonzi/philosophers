@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:27:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 16:56:35 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:29:52 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,55 @@ int	ft_strlen(const char *s)
 
 int	ft_print_error(char *s)
 {
-	if (write(2, "Error: ", 7) == -1)
+	if (write(STDERR_FILENO, "Error: ", 7) == -1)
 		return (1);
 	if (s)
 	{
-		if (write(2, s, ft_strlen(s)) == -1)
+		if (write(STDERR_FILENO, s, ft_strlen(s)) == -1)
 			return (1);
 	}
-	if (write(2, "\n", 1) == -1)
+	if (write(STDERR_FILENO, "\n", 1) == -1)
 		return (1);
 	return (1);
 }
 
-int	ft_clean_exit_error(t_data *data, int destroy_mutex)
+int	ft_cleanup(t_data *data, int destroy_mutex, int from_error)
 {
+	int	i;
+
+	i = -1;
+	if (pthread_mutex_unlock(&data->m_print) != 0)
+		ft_print_error(ERR_MUTEX_UNLOCK);
+	if (pthread_mutex_unlock(data->m_fork) != 0)
+		ft_print_error(ERR_MUTEX_UNLOCK);
+	if (pthread_mutex_unlock(&data->m_death) != 0)
+		ft_print_error(ERR_MUTEX_UNLOCK);
 	if (destroy_mutex == 1)
-		printf("TODO: destroy mutex\n");
+	{
+		if (pthread_mutex_destroy(&data->m_death) != 0)
+			ft_print_error(ERR_MUTEX_DESTROY);
+		if (pthread_mutex_destroy(&data->m_print) != 0)
+			ft_print_error(ERR_MUTEX_DESTROY);
+		while (++i < data->num_philos)
+			if (pthread_mutex_destroy(&data->m_fork[i]) != 0)
+				ft_print_error(ERR_MUTEX_DESTROY);
+	}
 	free(data->philo);
+	free(data->m_fork);
 	free(data);
-	return (0);
+	return (from_error);
 }
 
-int	ft_get_time(long int *time)
+long long int	ft_get_time(void)
 {
 	struct timeval	current_time;
+	long long int	time;
 
 	if (gettimeofday(&current_time, NULL) == -1)
-		return (ft_print_error(ERR_TIME));
-	*time = current_time.tv_sec * 1000000 + current_time.tv_usec;
-	return (0);
+	{
+		ft_print_error(ERR_TIME);
+		return (-1);
+	}
+	time = current_time.tv_sec * 1000000 + current_time.tv_usec;
+	return (time);
 }
