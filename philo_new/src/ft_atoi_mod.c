@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:47:30 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/04 19:02:31 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:36:16 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int	ft_check_digit(const char *nptr, int *i)
 	return (0);
 }
 
-int	ft_pow(int n, unsigned int pow)
+long long int	ft_pow(long long int n, unsigned int pow)
 {
 	if (pow == 0)
 		return (1);
 	return (n * ft_pow(n, pow - 1));
 }
 
-int	ft_atoi_mod(const char *nptr)
+long long int	ft_atoi_mod(const char *nptr)
 {
-	int		i;
-	long	res;
-	int		start_num;
+	int				i;
+	long long int	res;
+	int				start_num;
 
 	i = 0;
 	res = 0;
@@ -68,7 +68,7 @@ int	ft_atoi_mod(const char *nptr)
 		return (-1);
 	while (++start_num < i)
 		res = res + (nptr[start_num] - '0') * ft_pow(10, i - start_num - 1);
-	if (res > 2147483647)
-		return (-1);
-	return ((int)res);
+	//if (res > 2147483647)
+	//	return (-1);
+	return (res);
 }
