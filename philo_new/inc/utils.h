@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 12:29:13 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 19:30:18 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:12:20 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 int					ft_strlen(const char *s);
 int					ft_print_error(char *s);
 int					ft_cleanup(t_data *data, int destroy_mutex, int from_error);
+int					ft_usleep(int time);
 long long int		ft_get_time(void);
 
 /* utils_2.c */

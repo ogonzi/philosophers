@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:27:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 19:29:52 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:18:16 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,19 @@ int	ft_cleanup(t_data *data, int destroy_mutex, int from_error)
 	return (from_error);
 }
 
+int	ft_usleep(int time)
+{
+	long long int	current_time;
+
+	current_time = ft_get_time();
+	while (time > ft_get_time() - current_time)
+	{
+		if (usleep(time / 2) == -1)
+			return (ft_print_error(ERR_USLEEP));
+	}
+	return (0);
+}
+
 long long int	ft_get_time(void)
 {
 	struct timeval	current_time;
@@ -77,6 +90,6 @@ long long int	ft_get_time(void)
 		ft_print_error(ERR_TIME);
 		return (-1);
 	}
-	time = current_time.tv_sec * 1000000 + current_time.tv_usec;
+	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (time);
 }

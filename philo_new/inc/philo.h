@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:58:55 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 19:39:30 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:12:34 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	int					death;
 	long long int		start_time;
 	long long int		current_time;
+	int					err;
 	t_philo				*philo;
 	pthread_mutex_t		m_death;
 	pthread_mutex_t		*m_fork;
@@ -59,7 +60,14 @@ int		ft_create_pthreads(t_data *data);
 
 /* print.c */
 
-void	ft_print_state_change(int timestamp, int philo_num, int state_code);
+void	ft_print_state_change(long long int timestamp, int philo_num,
+			int state_code);
+
+/* activities.c */
+
+int		ft_eat(t_philo *philo);
+int		ft_sleep(t_philo *philo);
+int		ft_think(t_philo *philo);
 
 /* end_conditions.c */
 
