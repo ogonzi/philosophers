@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:03:28 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/05 17:46:20 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 18:56:29 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	ft_eat(t_philo *philo)
 		philo->time_of_last_meal = ft_get_time() - data->start_time;
 		if (ft_print_state_change(philo, EAT) != 0)
 			return (1);
-		philo->meal_counter++;
 		if (ft_usleep(philo->data->time_to_eat) != 0)
 			return (1);
+		philo->meal_counter++;
 	}
 	if (ft_unlock_forks(philo) != 0)
 		return (1);

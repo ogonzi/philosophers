@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/05/18 10:00:13 by ogonzale          #+#    #+#              #
-#    Updated: 2022/09/21 17:00:34 by ogonzale         ###   ########.fr        #
+#    Created: 2022/11/02 15:55:08 by ogonzale          #+#    #+#              #
+#    Updated: 2022/11/04 17:13:45 by ogonzale         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,9 @@
 
 NAME 		:= philo
 INC		 	:= inc/
-INCLUDE 	:= -I$(INC)
+INCLUDE		:= -I $(INC)
 SRC_DIR 	:= src/
 OBJ_DIR 	:= obj/
-CC 			:= cc
 CFLAGS 		:= -Wall -Wextra -Werror -pthread
 RM 			:= rm -f
 
@@ -35,7 +34,8 @@ WHITE 		:= \033[0;97m
 
 #Sources
 
-SRC_FILES	:=	philo parse thread ft_atoi_mod activity utils utils_2 
+SRC_FILES	:= philo parse init threads activities end_conditions print \
+	           ft_atoi_mod utils 
 
 SRC 		= $(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
@@ -47,16 +47,16 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c Makefile
 	@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
 	@$(CC) -MT $@ -MMD -MP $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-all:	$(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME): $(OBJ) 
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 clean:
 	@$(RM) -r $(OBJ_DIR)
 	@$(RM) $(OBJF)
-	@echo "$(BLUE)Pipex object and dependency files cleaned.$(DEF_COLOR)"
+	@echo "$(BLUE)$(NAME) object and dependency files cleaned.$(DEF_COLOR)"
 
 fclean:	clean
 	@$(RM) $(NAME)
@@ -71,6 +71,6 @@ norm:
 	@clear
 	@norminette $(SRC_DIR) $(INC) $(LIBFT_DIR) | grep -v Norme -B1 || true
 	
-.PHONY:	all clean fclean re norm
+.PHONY:	all clean fclean re norm 
 
 -include $(OBJ:%.o=%.d)

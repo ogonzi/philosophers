@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 16:53:01 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/05 13:40:39 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 18:32:53 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_init_philosophers(t_data *data)
 		data->philo[i].right_fork_index = i + 1;
 		data->philo[i].data = data;
 		data->philo[i].meal_counter = 0;
+		data->philo[i].time_of_last_meal = data->start_time;
 	}
 	data->philo[i - 1].right_fork_index = 0;
 	return (0);

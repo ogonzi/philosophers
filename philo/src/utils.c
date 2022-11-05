@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/04 12:24:29 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/09/20 11:50:57 by ogonzale         ###   ########.fr       */
+/*   Created: 2022/11/02 16:27:51 by ogonzale          #+#    #+#             */
+/*   Updated: 2022/11/05 18:29:16 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,53 @@ int	ft_strlen(const char *s)
 
 int	ft_print_error(char *s)
 {
-	if (write(2, "Error: ", 7) == -1)
-		return (1);
+	write(STDERR_FILENO, "Error: ", 7);
 	if (s)
-	{
-		if (write(2, s, ft_strlen(s)) == -1)
-			return (1);
-	}
-	if (write(2, "\n", 1) == -1)
-		return (1);
+		write(STDERR_FILENO, s, ft_strlen(s));
+	write(STDERR_FILENO, "\n", 1);
 	return (1);
 }
 
-void	ft_print_state_change(int timestamp, int philo_num, int state_code)
+int	ft_cleanup(t_data *data, int destroy_mutex, int from_error)
 {
-	if (state_code == FORK_CODE)
-		printf("%d %d has taken a fork\n", timestamp, philo_num);
-	if (state_code == EAT_CODE)
-		printf("%d %d is eating\n", timestamp, philo_num);
-	if (state_code == SLEEP_CODE)
-		printf("%d %d is sleeping\n", timestamp, philo_num);
-	if (state_code == THINK_CODE)
-		printf("%d %d is thinking\n", timestamp, philo_num);
-	if (state_code == DIE_CODE)
-		printf("%d %d died\n", timestamp, philo_num);
+	int	i;
+
+	i = -1;
+	if (destroy_mutex == 1)
+	{
+		if (pthread_mutex_destroy(&data->m_death) != 0)
+			ft_print_error(ERR_MUTEX_DESTROY);
+		if (pthread_mutex_destroy(&data->m_print) != 0)
+			ft_print_error(ERR_MUTEX_DESTROY);
+		while (++i < data->number_of_philos)
+			if (pthread_mutex_destroy(&data->m_fork[i]) != 0)
+				ft_print_error(ERR_MUTEX_DESTROY);
+	}
+	free(data->philo);
+	free(data->m_fork);
+	free(data);
+	return (from_error);
 }
 
-int	ft_allocate_pthread(t_pthread **pthread, int philo_num)
+int	ft_usleep(int time)
 {
-	*pthread = malloc(sizeof(t_pthread) * philo_num);
-	if (*pthread == NULL)
-		return (ft_print_error(ERR_MEM));
+	long long int	current_time;
+
+	current_time = ft_get_time();
+	while (time > ft_get_time() - current_time)
+	{
+		if (usleep(1) == -1)
+			return (ft_print_error(ERR_USLEEP));
+	}
 	return (0);
 }
 
-int	ft_get_time(long int *time)
+long long int	ft_get_time(void)
 {
 	struct timeval	current_time;
+	long long int	time;
 
-	if (gettimeofday(&current_time, NULL) == -1)
-		return (ft_print_error(ERR_TIME));
-	*time = current_time.tv_sec * 1000000 + current_time.tv_usec;
-	return (0);
+	gettimeofday(&current_time, NULL);
+	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	return (time);
 }

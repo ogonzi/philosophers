@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 17:54:02 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/01 18:34:38 by ogonzale         ###   ########.fr       */
+/*   Created: 2022/11/02 15:58:55 by ogonzale          #+#    #+#             */
+/*   Updated: 2022/11/05 18:35:20 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,57 +15,59 @@
 
 # include <pthread.h>
 
-typedef struct s_args
-{
-	int			num_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			max_meals;
-	long int	start_tv_usec;
-}				t_args;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
-	int			eating;
-	int			sleeping;
-	int			thinking;
-	int			forks_used;
-	int			eat_counter;
-	long int	start_time;
-	int			philo_num;
-}				t_philo;
+	int				number;
+	int				right_fork_index;
+	int				left_fork_index;
+	long long int	time_of_last_meal;
+	int				meal_counter;
+	t_data			*data;
+}					t_philo;
 
-typedef struct s_pthread
+typedef struct s_data
 {
-	pthread_t		tid;
-	pthread_mutex_t	fork_lock;
-	pthread_mutex_t	*all_lock;
-	t_args			args;
-	t_philo			philo;
-	int				*end;
-}					t_pthread;
+	int					number_of_philos;
+	long long int		time_to_die;
+	long long int		time_to_eat;
+	long long int		time_to_sleep;
+	long long int		max_meals;
+	int					death;
+	long long int		start_time;
+	t_philo				*philo;
+	pthread_mutex_t		m_death;
+	pthread_mutex_t		*m_fork;
+	pthread_mutex_t		m_print;
+}						t_data;
 
 /* parse.c */
-int		ft_set_args(int argc, char *argv[], t_args *args);
-int		ft_parse_and_allocate(int argc, char *argv[], t_pthread **pthread);
 
-/* ft_atoi_mod.c */
+int		ft_parse(int argc, char *argv[], t_data *data);
 
-int		ft_atoi_mod(const char *nptr);
+/* init.c */
 
-/* thread.c */
+int		ft_init_mutexes(t_data *data);
+int		ft_init_philosophers(t_data *data);
 
-int		ft_create_thread(t_pthread *pthread);
-int		ft_print_sequence(t_pthread *pthread, int status_code,
-			long int *timestamp);
-void	*ft_thread_routine(void *args);
-int		ft_philo_will_die(t_pthread *pthread);
+/* create_pthreads.c */
 
-/* activity.c */
+int		ft_create_pthreads(t_data *data);
 
-int		ft_eat(t_pthread *this_pthread, t_pthread *left_pthread, long int *t);
-int		ft_sleep(t_pthread *this_pthread, long int *t);
-int		ft_think(t_pthread *this_pthread, long int *t);
+/* print.c */
+
+int		ft_print_state_change(t_philo *philo, int state);
+
+/* activities.c */
+
+int		ft_eat(t_philo *philo);
+int		ft_sleep(t_philo *philo);
+int		ft_think(t_philo *philo);
+
+/* end_conditions.c */
+
+int		ft_routine_is_finished(t_data *data);
+int		ft_any_philo_died(t_data *data);
 
 #endif
