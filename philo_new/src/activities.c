@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:03:28 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/05 14:01:24 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:46:20 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,8 @@ int	ft_eat(t_philo *philo)
 	t_data	*data;
 
 	data = philo->data;
-	if (pthread_mutex_lock(&data->m_death) != 0)
-		return (ft_print_error(ERR_MUTEX_LOCK));
 	if (data->death != 0)
-	{
-		if (pthread_mutex_unlock(&data->m_death) != 0)
-			return (ft_print_error(ERR_MUTEX_LOCK));
 		return (-1);
-	}
-	if (pthread_mutex_unlock(&data->m_death) != 0)
-		return (ft_print_error(ERR_MUTEX_UNLOCK));
-	//if (data->death != 0)
-	//	return (-1);
 	if (pthread_mutex_lock(&data->m_fork[philo->left_fork_index]) != 0)
 		return (ft_print_error(ERR_MUTEX_LOCK));
 	if (ft_print_state_change(philo, GRAB_FORK) != 0)
@@ -65,16 +55,8 @@ int	ft_eat(t_philo *philo)
 
 int	ft_sleep(t_philo *philo)
 {
-	if (pthread_mutex_lock(&philo->data->m_death) != 0)
-		return (ft_print_error(ERR_MUTEX_LOCK));
 	if (philo->data->death != 0)
-	{
-		if (pthread_mutex_unlock(&philo->data->m_death) != 0)
-			return (ft_print_error(ERR_MUTEX_LOCK));
 		return (-1);
-	}
-	if (pthread_mutex_unlock(&philo->data->m_death) != 0)
-		return (ft_print_error(ERR_MUTEX_UNLOCK));
 	if (ft_print_state_change(philo, SLEEP) != 0)
 		return (1);
 	if (ft_usleep(philo->data->time_to_sleep) != 0)
