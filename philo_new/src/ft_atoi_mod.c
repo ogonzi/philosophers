@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 09:47:30 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/03 16:36:16 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:31:23 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,5 @@ long long int	ft_atoi_mod(const char *nptr)
 		return (-1);
 	while (++start_num < i)
 		res = res + (nptr[start_num] - '0') * ft_pow(10, i - start_num - 1);
-	//if (res > 2147483647)
-	//	return (-1);
 	return (res);
 }

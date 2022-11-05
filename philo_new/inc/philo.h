@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:58:55 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/04 17:12:34 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:40:16 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
-	int				philo_num;
-	int				right_fork;
-	int				left_fork;
-	long long int	last_meal;
-	int				num_meals;
+	int				number;
+	int				right_fork_index;
+	int				left_fork_index;
+	long long int	time_of_last_meal;
+	int				meal_counter;
 	long long int	time_of_start;
 	t_data			*data;
 }					t_philo;
 
 typedef struct s_data
 {
-	int					num_philos;
+	int					number_of_philos;
 	long long int		time_to_die;
 	long long int		time_to_eat;
 	long long int		time_to_sleep;
@@ -38,7 +38,6 @@ typedef struct s_data
 	int					death;
 	long long int		start_time;
 	long long int		current_time;
-	int					err;
 	t_philo				*philo;
 	pthread_mutex_t		m_death;
 	pthread_mutex_t		*m_fork;
@@ -60,8 +59,7 @@ int		ft_create_pthreads(t_data *data);
 
 /* print.c */
 
-void	ft_print_state_change(long long int timestamp, int philo_num,
-			int state_code);
+int		ft_print_state_change(t_philo *philo, int state);
 
 /* activities.c */
 

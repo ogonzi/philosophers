@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 11:35:10 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/04 16:58:54 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:38:31 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 int	ft_set_data(int argc, char *argv[], t_data *data)
 {
-	data->num_philos = ft_atoi_mod(argv[1]);
-	if (data->num_philos <= 0)
+	data->number_of_philos = ft_atoi_mod(argv[1]);
+	if (data->number_of_philos <= 0)
 		return (1);
 	data->time_to_die = ft_atoi_mod(argv[2]);
 	if (data->time_to_die <= 0)
@@ -36,7 +36,6 @@ int	ft_set_data(int argc, char *argv[], t_data *data)
 	}
 	else
 		data->max_meals = -1;
-	data->err = 0;
 	return (0);
 }
 

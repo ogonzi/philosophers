@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:27:51 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/04 18:18:16 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/05 13:50:14 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,13 @@ int	ft_cleanup(t_data *data, int destroy_mutex, int from_error)
 	int	i;
 
 	i = -1;
-	if (pthread_mutex_unlock(&data->m_print) != 0)
-		ft_print_error(ERR_MUTEX_UNLOCK);
-	if (pthread_mutex_unlock(data->m_fork) != 0)
-		ft_print_error(ERR_MUTEX_UNLOCK);
-	if (pthread_mutex_unlock(&data->m_death) != 0)
-		ft_print_error(ERR_MUTEX_UNLOCK);
 	if (destroy_mutex == 1)
 	{
 		if (pthread_mutex_destroy(&data->m_death) != 0)
 			ft_print_error(ERR_MUTEX_DESTROY);
 		if (pthread_mutex_destroy(&data->m_print) != 0)
 			ft_print_error(ERR_MUTEX_DESTROY);
-		while (++i < data->num_philos)
+		while (++i < data->number_of_philos)
 			if (pthread_mutex_destroy(&data->m_fork[i]) != 0)
 				ft_print_error(ERR_MUTEX_DESTROY);
 	}
