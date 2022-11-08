@@ -6,7 +6,7 @@
 /*   By: ogonzale <ogonzale@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:10:25 by ogonzale          #+#    #+#             */
-/*   Updated: 2022/11/05 18:40:20 by ogonzale         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:35:05 by ogonzale         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	main(int argc, char **argv)
 	if (data == NULL)
 		return (ft_print_error(ERR_MEM));
 	if (ft_parse(argc, argv, data) != 0)
+	{
+		free(data);
 		return (1);
+	}
 	if (ft_init_mutexes(data) != 0)
 		return (ft_cleanup(data, 0, 1));
 	if (ft_init_philosophers(data) != 0)
